@@ -1,3 +1,0 @@
-a hi
-this is for me to figure out how git works
-thamk you
