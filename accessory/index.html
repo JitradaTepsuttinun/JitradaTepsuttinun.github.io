@@ -52,6 +52,7 @@
             <th>Accessory</th>
             <th>Amount</th>
             <th>Price</th>
+            <th>Action</th>
         </tr>
     </table>
  
@@ -61,49 +62,61 @@
 
  
     <script>
-     
- 
-     function addToProductList() {
-            var accessory = $('#accessory').val();
-            var accessoryName = $("#accessory option:selected").text();
-            var amount = $('#amount').val();
-            var price = calculatePrice(accessory);
+    var listIndex = 0;
 
-            var row = `<tr>
-                                <td>${accessoryName}</td>
-                                <td>${amount}</td>
-                                <td>$${(price * amount).toFixed(2)}</td>
-                           </tr>`;
-            $('#productList').append(row);
+    function addToProductList() {
+        var accessory = $('#accessory').val();
+        var accessoryName = $("#accessory option:selected").text();
+        var amount = $('#amount').val();
+        var price = calculatePrice(accessory);
 
-            updateTotalPrice(price * amount);
-        }
- 
-        function calculatePrice(accessory) {
-            switch (accessory) {
-                case "p123":
-                    return 50;
-                case "p234":
-                    return 30;
-                case "p456":
-                    return 20;
-                case "p996":
-                    return 40;
-                default:
-                    return 0;
-            }
-        }
-        var totalPrice = 0
-        function updateTotalPrice(price) {
-            totalPrice += price;
-                var vatRate = 0.07;
-                var vatAmount = totalPrice * vatRate;
-                $('#totalPrice').text(totalPrice.toFixed(2));
-                $('#vatAmount').text(vatAmount.toFixed(2));
-                $('#netPrice').text((totalPrice + vatAmount).toFixed(2));
+        var row = `<tr id="row${listIndex}">
+                        <td>${accessoryName}</td>
+                        <td>${amount}</td>
+                        <td>$${(price * amount).toFixed(2)}</td>
+                        <td><button onclick="deleteRow(${listIndex}, ${price * amount})">Delete</button></td>
+                   </tr>`;
+        $('#productList').append(row);
+        listIndex += 1;
 
+        updateTotalPrice(price * amount);
+    }
+
+    function calculatePrice(accessory) {
+        switch (accessory) {
+            case "p123":
+                return 50;
+            case "p234":
+                return 30;
+            case "p456":
+                return 20;
+            case "p996":
+                return 40;
+            default:
+                return 0;
         }
+    }
+
+    var totalPrice = 0;
+    function updateTotalPrice(price) {
+        totalPrice += price;
+        var vatRate = 0.07;
+        var vatAmount = totalPrice * vatRate;
+        $('#totalPrice').text(totalPrice.toFixed(2));
+        $('#vatAmount').text(vatAmount.toFixed(2));
+        $('#netPrice').text((totalPrice + vatAmount).toFixed(2));
+    }
+
+    function deleteRow(index, price) {
+        $(`#row${index}`).remove();
+        totalPrice -= price;
+        var vatRate = 0.07;
+        var vatAmount = totalPrice * vatRate;
+        $('#totalPrice').text(totalPrice.toFixed(2));
+        $('#vatAmount').text(vatAmount.toFixed(2));
+        $('#netPrice').text((totalPrice + vatAmount).toFixed(2));
+    }
     </script>
 </body>
  
-</html></select></form>
+</html>
