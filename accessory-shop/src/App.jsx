@@ -17,6 +17,7 @@ function App() {
   const productRef = useRef();
   const [price, setPrice] = useState(accessoryData[0].price);
 
+
   const handleSubmit = (e) => {
     const productId = parseInt(productRef.current.value);
     const product = accessoryData.find(
