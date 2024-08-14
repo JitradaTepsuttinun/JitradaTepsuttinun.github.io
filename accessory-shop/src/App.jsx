@@ -3,14 +3,15 @@ import accessoryData from "./accessory.json";
 import DataTable from "./components/DataTable";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
+import { useLocalStorage } from "react-use";
 
 function App() {
   // For a component, it must return a single JSX element.
   // So if you have multiple elements, you need to wrap them in a single element.
   // You can use <>...</> to wrap multiple elements (only in JSX).
 
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [filteredSelectedItems, setFilteredSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useLocalStorage("selected-items", []);
+  const [filteredSelectedItems, setFilteredSelectedItems] = useState([...selectedItems]);
   // const [sortedSelectedItems, setSortedSelectedItems] = useState([]);
 
   const quantityRef = useRef();
