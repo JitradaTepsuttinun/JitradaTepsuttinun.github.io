@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import accessoryData from "./accessory.json";
-import DataTable from "./components/DataTable";
+import DataTable, { TotalPriceContext } from "./components/DataTable";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
 import { useLocalStorage } from "react-use";
+
 
 function App() {
   // For a component, it must return a single JSX element.
@@ -77,6 +78,8 @@ function App() {
 
   return (
     <>
+    <TotalPriceContext.Provider
+    value={{totalPrice, setTotalPrice, filteredSelectedItems, deleteItemByIndex, filter}}>
       <Container>
         <Row>
           <Col xs={2}> Product: </Col>
@@ -112,6 +115,7 @@ function App() {
           onSortDes={sortDes}
           />
       </Container>
+    </TotalPriceContext.Provider>
       {/* <div className="container">
         <div className="row">
           <div className="col-2"> Product: </div>

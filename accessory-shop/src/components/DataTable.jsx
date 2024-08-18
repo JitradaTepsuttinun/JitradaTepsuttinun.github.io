@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import { TotalPriceContext } from "../context";
 
 const DataTable = ({ data, onDelete, onFilter, onSortAsc, onSortDes }) => {
     const sRef = React.useRef()
+    const { totalPrice, setTotalPrice,
+        filteredDataItems: data, 
+        deleteItemByIndex: onDelete, 
+        filter: onFilter } = React.useContext(TotalPriceContext)
+
+    let sum = data.reduce((acc, item) => {
+        return acc + item.price * item.quantity
+    }, 0)
+
+    useEffect(() => {
+        setTotalPrice(sum)
+    })
 
     const handleSearch = () => {
         const keyword = sRef.current.value
